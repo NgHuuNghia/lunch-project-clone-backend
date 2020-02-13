@@ -1,6 +1,8 @@
 /* eslint-disable no-return-await */
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
-import { User, UserInput } from './user.entity'
+import {
+  User, UserInput, LoginResponse, Permision
+} from './user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { MongoRepository } from 'typeorm'
 import * as uuid from 'uuid'
@@ -20,7 +22,7 @@ export class UserService {
     return await this.userRepository.findOne({ _id: id })
   }
 
-  async signup(input: UserInput): Promise<User> {
+  async createUser(input: UserInput): Promise<User> {
     const checkUser = await this.userRepository.findOne({ username: input.username })
     if (checkUser) {
       throw new HttpException(
@@ -33,29 +35,33 @@ export class UserService {
     user._id = uuid.v4()
     user.username = input.username
     user.password = bcrypt.hashSync(input.password, 10)
+    user.userPermissions = Permision.USER
     return await this.userRepository.save(user)
   }
 
-  async login(input: UserInput): Promise<String> { // authentication
+  async login(input: UserInput): Promise<LoginResponse> { // authentication
     const user = await this.userRepository.findOne({ username: input.username })
     if (!user) {
       throw new HttpException(
-        'account does not exist!',
+        // 'account does not exist!',
+        'Tài khoản hoặc mật khẩu sai',
         HttpStatus.BAD_REQUEST,
       )
     }
 
     const isEqual = bcrypt.compareSync(input.password, user.password)
     if (!isEqual) {
-      throw new HttpException('Password is incorrect', HttpStatus.BAD_REQUEST)
+      // 'Password is incorrect'
+      throw new HttpException('Tài khoản hoặc mật khẩu sai', HttpStatus.BAD_REQUEST)
     }
     const token = jwt.sign(
       // eslint-disable-next-line no-underscore-dangle
-      { userId: user._id },
+      { userId: user._id, userPermissions: user.userPermissions },
       'huunghia.nguyen',
       { expiresIn: '30d' },
     )
-
-    return token
+    return {
+      token
+    }
   }
 }

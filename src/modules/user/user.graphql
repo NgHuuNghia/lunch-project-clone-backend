@@ -2,6 +2,7 @@ type User {
   _id: String!
   username: String!
   password: String!
+  userPermissions: Permision!
 }
 
 input UserInput {
@@ -17,5 +18,14 @@ type Query {
 
 type Mutation {
   register(input: UserInput!): User!
-  login(input: UserInput!): String!
+  login(input: UserInput!): LoginResponse!
+}
+
+type LoginResponse {
+	token: String!
+}
+
+enum Permision {
+  USER
+  ADMIN
 }

@@ -2,6 +2,7 @@
 import { Entity, Column, ObjectIdColumn } from 'typeorm'
 import { IsString, MinLength, IsNotEmpty } from 'class-validator'
 
+export enum Permision {USER='USER', ADMIN='USER'}
 @Entity()
 export class User {
     @ObjectIdColumn()
@@ -16,6 +17,11 @@ export class User {
     @IsString()
     @IsNotEmpty()
     password: string;
+
+    @Column()
+    @IsString()
+    @IsNotEmpty()
+    userPermissions: Permision;
 }
 
 export class UserInput {
@@ -31,4 +37,8 @@ export class UserInput {
     @IsString()
     @IsNotEmpty({ message: 'password can not be blank.' })
     password: string;
+}
+
+export class LoginResponse {
+  token: string;
 }
