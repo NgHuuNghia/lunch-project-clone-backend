@@ -22,6 +22,7 @@ input LoginUserInput {
 type Query {
   users: [User!]
   user(id: String!): User
+  verifyToken(token: String!): User
 }
 
 

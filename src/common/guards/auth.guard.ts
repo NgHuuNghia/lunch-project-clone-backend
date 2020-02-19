@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       throw new HttpException('Invalid token', 401)
     }
     const token = auth.split(' ')[1]
-    return jwt.verify(token, 'huunghia.nguyen', async (err, decoded) => {
+    return jwt.verify(token, process.env.TOKEN_SECRET, async (err, decoded) => {
       if (err) {
         throw new HttpException(
           {

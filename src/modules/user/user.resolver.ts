@@ -21,6 +21,11 @@ export class UserResolver {
     return this.userService.findOne(id)
   }
 
+  @Query(() => User)
+  async verifyToken(@Args('token') token: string) {
+    return this.userService.verifyToken(token)
+  }
+
   @Mutation(() => User)
   async register(@Args('input') input: CreateUserInput) {
     return this.userService.createUser(input)

@@ -59,11 +59,33 @@ export class UserService {
     const token = jwt.sign(
       // eslint-disable-next-line no-underscore-dangle
       { userId: user._id },
-      'huunghia.nguyen',
+      process.env.TOKEN_SECRET,
       { expiresIn: '30d' },
     )
     return {
       token
     }
+  }
+
+  async verifyToken(token: string): Promise<User> {
+    if (!token) {
+      throw new HttpException('Invalid token', 401)
+    }
+    if (token.split(' ')[0] !== 'Bearer') {
+      throw new HttpException('Invalid token', 401)
+    }
+    const tokenValue = token.split(' ')[1]
+    return jwt.verify(tokenValue, process.env.TOKEN_SECRET, async (err, decoded) => {
+      if (err) {
+        throw new HttpException('decode faild', 403)
+      } else {
+        const { userId } = decoded
+        const userCurrent = await this.findOne(userId)
+        if (userCurrent) {
+          return userCurrent
+        }
+        throw new HttpException('không tồn tại tài khỏan này', 404)
+      }
+    })
   }
 }
