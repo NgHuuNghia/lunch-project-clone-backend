@@ -1,7 +1,7 @@
 /* eslint-disable no-return-await */
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
 import {
-  User, UserInput, LoginResponse, Permision
+  User, CreateUserInput, LoginResponse, ROLES, SITES, LoginUserInput
 } from './user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { MongoRepository } from 'typeorm'
@@ -22,11 +22,11 @@ export class UserService {
     return await this.userRepository.findOne({ _id: id })
   }
 
-  async createUser(input: UserInput): Promise<User> {
+  async createUser(input: CreateUserInput): Promise<User> {
     const checkUser = await this.userRepository.findOne({ username: input.username })
     if (checkUser) {
       throw new HttpException(
-        'username is already!',
+        'Tài khoản đã tồn tại!',
         HttpStatus.BAD_REQUEST,
       )
     }
@@ -35,11 +35,13 @@ export class UserService {
     user._id = uuid.v4()
     user.username = input.username
     user.password = bcrypt.hashSync(input.password, 10)
-    user.userPermissions = Permision.USER
+    user.fullname = input.fullname
+    user.site = input.site
+    user.role = ROLES.USER
     return await this.userRepository.save(user)
   }
 
-  async login(input: UserInput): Promise<LoginResponse> { // authentication
+  async login(input: LoginUserInput): Promise<LoginResponse> { // authentication
     const user = await this.userRepository.findOne({ username: input.username })
     if (!user) {
       throw new HttpException(
@@ -56,7 +58,7 @@ export class UserService {
     }
     const token = jwt.sign(
       // eslint-disable-next-line no-underscore-dangle
-      { userId: user._id, userPermissions: user.userPermissions },
+      { userId: user._id },
       'huunghia.nguyen',
       { expiresIn: '30d' },
     )
