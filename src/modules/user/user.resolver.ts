@@ -35,4 +35,13 @@ export class UserResolver {
   async login(@Args('input') input: LoginUserInput) {
     return this.userService.login(input)
   }
+
+  @Mutation(() => Boolean)
+  async changePassword(
+  @Args('_id') userId: string,
+  @Args('currentpassword') currentpassword: string,
+  @Args('password') password: string
+  ): Promise<Boolean> {
+    return this.userService.changePassword(userId, currentpassword, password)
+  }
 }
