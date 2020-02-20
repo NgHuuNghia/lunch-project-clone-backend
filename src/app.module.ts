@@ -17,6 +17,7 @@ import { join } from 'path'
       synchronize: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      logging: true,
       keepAlive: 300000,
       connectTimeoutMS: 50000
     }),
