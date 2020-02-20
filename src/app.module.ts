@@ -23,6 +23,8 @@ import { join } from 'path'
       useNewUrlParser: true,
       logging: true,
       useUnifiedTopology: true,
+      keepAlive: 300000,
+      connectTimeoutMS: 30000
     }),
     UserModule,
   ],
