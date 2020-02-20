@@ -10,21 +10,20 @@ import { join } from 'path'
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    GraphQLModule.forRoot({
-      typePaths: ['./**/*.graphql'],
-      context: ({ req }) => ({ req }),
-      playground: true,
-    }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: process.env.MONGO_URI,
       entities: [join(__dirname, '**/**.entity{.ts,.js}')],
       synchronize: true,
       useNewUrlParser: true,
-      logging: true,
       useUnifiedTopology: true,
       keepAlive: 300000,
       connectTimeoutMS: 30000
+    }),
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      context: ({ req }) => ({ req }),
+      playground: true,
     }),
     UserModule,
   ],
