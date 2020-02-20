@@ -18,7 +18,7 @@ import { join } from 'path'
       useNewUrlParser: true,
       useUnifiedTopology: true,
       keepAlive: 300000,
-      connectTimeoutMS: 30000
+      connectTimeoutMS: 50000
     }),
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
