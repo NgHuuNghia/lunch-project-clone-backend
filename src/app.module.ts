@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { UserModule } from './modules/user/user.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { join } from 'path'
+import { SiteModule } from './modules/site/site.module'
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { join } from 'path'
       playground: true,
     }),
     UserModule,
+    SiteModule
   ],
   controllers: [AppController],
   providers: [AppService]

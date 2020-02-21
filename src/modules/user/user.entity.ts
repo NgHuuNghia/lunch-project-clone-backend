@@ -6,13 +6,10 @@ import {
 
 export enum ROLES {
   USER = 'USER',
-  ADMIN = 'USER'
+  ADMIN = 'USER',
+  SUPERADMIN = 'SUPERADMIN'
 }
-export enum SITES {
-  SG = 'SG',
-  NT = 'NT',
-  DN = 'DN'
-}
+
 @Entity()
 export class User {
   @ObjectIdColumn()
@@ -26,9 +23,6 @@ export class User {
   @Column()
   @IsString()
   @IsNotEmpty()
-  @Length(3, 20, {
-    message: 'Your fullName must be between 3 and 20 characters.'
-  })
   password: string;
 
   @Column()
@@ -39,7 +33,7 @@ export class User {
   @Column()
   @IsString()
   @IsNotEmpty()
-  site: SITES;
+  siteId: string;
 
   @Column()
   @IsString()
@@ -51,22 +45,18 @@ export class CreateUserInput {
   @MinLength(4, {
     message: 'username must be at least 4 characters'
   })
-  @Column()
   @IsString({ message: 'username is not string' })
   @IsNotEmpty({ message: 'username can not be blank.' })
   username: string;
 
-  @Column()
   @IsString()
   @IsNotEmpty({ message: 'fullname can not be blank.' })
   fullname: string;
 
-  @Column()
   @IsString()
   @IsNotEmpty({ message: 'site can not be blank.' })
-  site: SITES;
+  siteId: string;
 
-  @Column()
   @IsString()
   @IsNotEmpty({ message: 'password can not be blank.' })
   @Length(3, 20, {
@@ -79,12 +69,10 @@ export class LoginUserInput {
   @MinLength(4, {
     message: 'username must be at least 4 characters'
   })
-  @Column()
   @IsString({ message: 'username is not string' })
   @IsNotEmpty({ message: 'username can not be blank.' })
   username: string;
 
-  @Column()
   @IsString()
   @IsNotEmpty({ message: 'password can not be blank.' })
   password: string;

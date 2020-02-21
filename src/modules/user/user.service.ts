@@ -5,7 +5,6 @@ import {
   CreateUserInput,
   LoginResponse,
   ROLES,
-  SITES,
   LoginUserInput
 } from './user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -41,7 +40,7 @@ export class UserService {
     user.username = input.username
     user.password = bcrypt.hashSync(input.password, 10)
     user.fullname = input.fullname
-    user.site = input.site
+    user.siteId = input.siteId
     user.role = ROLES.USER
     return await this.userRepository.save(user)
   }
