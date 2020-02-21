@@ -1,6 +1,8 @@
 // eslint-disable-next-line max-classes-per-file
 import { Entity, Column, ObjectIdColumn } from 'typeorm'
-import { IsString, MinLength, IsNotEmpty } from 'class-validator'
+import {
+  IsString, MinLength, IsNotEmpty, Length
+} from 'class-validator'
 
 export enum ROLES {
   USER = 'USER',
@@ -24,6 +26,9 @@ export class User {
   @Column()
   @IsString()
   @IsNotEmpty()
+  @Length(3, 20, {
+    message: 'Your fullName must be between 3 and 20 characters.'
+  })
   password: string;
 
   @Column()
@@ -64,6 +69,9 @@ export class CreateUserInput {
   @Column()
   @IsString()
   @IsNotEmpty({ message: 'password can not be blank.' })
+  @Length(3, 20, {
+    message: 'Your fullName must be between 3 and 20 characters.'
+  })
   password: string;
 }
 
