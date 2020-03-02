@@ -1,0 +1,17 @@
+type Dish {
+  _id: String
+  name: String
+  isActive: Boolean
+  shopId: String
+}
+
+type Query {
+  dish(_id: String!): Dish
+  dishesByShop(shopId: String!): [Dish!]
+}
+
+type Mutation {
+  createDish(name: String!, shopId: String!): Boolean
+  updateDish(_id: String!, name: String!, isActive: Boolean): Boolean
+  deleteDish(_id: String!): Boolean
+}

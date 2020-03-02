@@ -1,0 +1,28 @@
+input CreateShopInput {
+	name: String!
+	siteId: String!
+}
+
+input UpdateShopInput {
+	name: String!
+	isActive: Boolean!
+}
+
+type Shop {
+	_id: String!
+	name: String!
+	isActive: Boolean!
+	siteId: String!
+}
+
+type Query {
+	shops: [Shop!]
+	shop(_id: String): Shop!
+	shopInSite(siteId: String) : [Shop!]
+}
+
+type Mutation {
+	createShop(input: CreateShopInput!): Shop
+	updateShop(_id: String!, input: UpdateShopInput!): Boolean
+	deleteShop(_id: String!): Boolean
+}

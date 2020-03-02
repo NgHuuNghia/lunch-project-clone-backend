@@ -1,0 +1,21 @@
+type DishMenu {
+  _id: String
+  name: String
+  orderCount: Int
+  count: Int
+  menuId: String
+  createdAt: String
+	updatedAt: String
+
+}
+
+type Query {
+  dishMenu(_id: String!): DishMenu!
+  dishesByMenu(menuId: String!): [DishMenu!]
+}
+
+type Mutation {
+  createDishMenu(name: String!, menuId: String!, count: Int!): Boolean
+  updateDishMenu(_id: String!, name: String!, count: Int!): Boolean
+  deleteDishMenu(_id: String!): Boolean
+}

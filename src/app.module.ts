@@ -7,6 +7,10 @@ import { UserModule } from './modules/user/user.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { join } from 'path'
 import { SiteModule } from './modules/site/site.module'
+import { ShopModule } from './modules/shop/shop.module'
+import { DishModule } from './modules/dish/dish.module'
+import { MenuModule } from './modules/menu/menu.module'
+import { DishMenuModule } from './modules/dishMenu/dishmenu.module'
 
 @Module({
   imports: [
@@ -28,7 +32,11 @@ import { SiteModule } from './modules/site/site.module'
       playground: true,
     }),
     UserModule,
-    SiteModule
+    SiteModule,
+    ShopModule,
+    DishModule,
+    MenuModule,
+    DishMenuModule
   ],
   controllers: [AppController],
   providers: [AppService]

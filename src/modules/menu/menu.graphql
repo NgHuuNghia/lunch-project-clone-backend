@@ -1,0 +1,22 @@
+type Menu {
+	_id: String
+	name: String
+	siteId: String
+	shopId: String
+	isPublic: Boolean
+	isActive: Boolean
+}
+
+type Query {
+	menu(id: String!): Menu 
+	menus: [Menu] 
+	menusBySite(siteId: String!): [Menu]
+}
+
+type Mutation {
+	createMenu(name: String!, siteId: String!, shopId: String!): Boolean
+	updateMenu(id: String!, name: String!, isActive: Boolean!): Boolean
+	publishAndUnpublishMenu(id: String!): Boolean
+	deleteMenu(id: String!): Boolean
+}
+
