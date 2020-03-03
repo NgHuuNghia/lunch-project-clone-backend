@@ -16,6 +16,16 @@ export class MenuService {
     return await this.menuReposity.find()
   }
 
+  async findMenuPublish(): Promise<string> {
+    const menu = await this.menuReposity.findOne({ isPublic: true })
+    if (!menu) {
+      throw new HttpException('not found menu publish', 404)
+    }
+    // eslint-disable-next-line no-underscore-dangle
+    const menuId = menu._id
+    return menuId
+  }
+
   async findOne(id: string): Promise<Menu> {
     return await this.menuReposity.findOne({ _id: id })
   }

@@ -8,6 +8,7 @@ import { ShopModule } from '../shop/shop.module'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Menu]), SiteModule, ShopModule],
-  providers: [MenuResolver, MenuService]
+  providers: [MenuResolver, MenuService],
+  exports: [MenuService]
 })
 export class MenuModule {}

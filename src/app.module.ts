@@ -11,6 +11,7 @@ import { ShopModule } from './modules/shop/shop.module'
 import { DishModule } from './modules/dish/dish.module'
 import { MenuModule } from './modules/menu/menu.module'
 import { DishMenuModule } from './modules/dishMenu/dishmenu.module'
+import { OrderModule } from './modules/order/order.module'
 
 @Module({
   imports: [
@@ -36,7 +37,8 @@ import { DishMenuModule } from './modules/dishMenu/dishmenu.module'
     ShopModule,
     DishModule,
     MenuModule,
-    DishMenuModule
+    DishMenuModule,
+    OrderModule
   ],
   controllers: [AppController],
   providers: [AppService]

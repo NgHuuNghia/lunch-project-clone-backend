@@ -4,12 +4,19 @@ import { DishMenu } from './dishmenu.entity'
 import { MongoRepository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as uuid from 'uuid'
+import { MenuService } from '../menu/menu.service'
 @Injectable()
 export class DishMenuService {
   // eslint-disable-next-line max-len
-  constructor(@InjectRepository(DishMenu) private readonly dishmenuReposity: MongoRepository<DishMenu>) {}
+  constructor(@InjectRepository(DishMenu) private readonly dishmenuReposity: MongoRepository<DishMenu>,
+  private readonly menuService: MenuService) {}
 
   async findDishMenu(menuId: string): Promise<DishMenu[]> {
+    return await this.dishmenuReposity.find({ menuId })
+  }
+
+  async findDishMenuPublish() : Promise<DishMenu[]> {
+    const menuId = await this.menuService.findMenuPublish()
     return await this.dishmenuReposity.find({ menuId })
   }
 

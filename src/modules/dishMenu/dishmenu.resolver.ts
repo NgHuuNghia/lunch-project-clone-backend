@@ -13,6 +13,11 @@ export class DishMenuResolver {
     return this.dishmenuService.findDishMenu(menuId)
   }
 
+  @Query(() => [DishMenu])
+  async dishesByMenuPublished() {
+    return this.dishmenuService.findDishMenuPublish()
+  }
+
   @Query(() => DishMenu)
   async dishMenu(@Args('_id') _id: string) {
     return this.dishmenuService.findOne(_id)
